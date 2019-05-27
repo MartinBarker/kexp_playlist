@@ -1,0 +1,150 @@
+<!-- load static files such as css -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playlist</title>
+    <!-- bootstrap -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">         
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/main.css' %}"> 
+    <!-- bootstrap -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+            <a class="navbar-brand mr-4" href="/">KEXP Playlist</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="{% url 'playlist-index' %}">Home</a> <!-- in blog urls.py file, blog-home is name of home url pattern -->
+                </div>
+                <!-- Navbar Right Side -->
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="www.martinbarker.me">Martin Barker</a>
+                    <a class="nav-item nav-link" href="#">Github</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Editable table -->
+<div class="card">
+        <h3 class="card-header text-center font-weight-bold py-4">{{numPlays}} plays from {{begin_time}} to {{end_time}}</h3>
+        <div class="card-body">
+          <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                  class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+              <thead>
+                <tr>
+                  <th class="text-center">Image</th>
+                  <th class="text-center">Airdate</th>
+                  <th class="text-center">ID</th>
+                  <th class="text-center">Type</th>
+                  <th class="text-center">Track</th>
+                  <th class="text-center">Release</th>
+                  <th class="text-center">Artist</th>
+                  <th class="text-center">Year</th>
+                  <th class="text-center">Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if plays %}
+
+                    {% for play in plays %}
+                    <tr>
+                       
+                            <td class="pt-3-half" contenteditable="false"> <img src='{{ play.releaseImage|default_if_none:"https://www.kexp.org/static/assets/img/default.png" }}' style="width:100px;height:100px;" ></td>
+                  
+                        <td class="pt-3-half" contenteditable="false">{{ play.airdate }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.playID }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.playtypeName }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.trackName }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.releaseName }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.artistName }}</td>
+                        <td class="pt-3-half" contenteditable="false">{{ play.releaseYear }}</td>
+                        <td class="pt-3-half" contenteditable="false">
+                                <form action="{% url 'comment' play.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ play.comment }}" name="commentInput">
+                                        <input type="submit" value="Submit">
+                                    </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <h3> no plays to show :( </h3>
+                {% endif %} 
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Editable table -->
+
+      <!--
+<main role="main" class="container">
+
+            
+                    {% if plays %}
+
+                    {% for play in plays %}
+                    <div class="row">
+                        <div class="col-md-8">
+
+                        <h1>Song Details:</h1>
+                            {{ play }}
+                            <br>
+                            <UL>
+                                <li>id: {{ play.pk }}</li>
+                                <li>playid: {{ play.playID }}</li>
+                                <li>playtype id: {{ play.playtypeID }}</li>
+                                <li>playtype name: {{ play.playtypeName }}</li>
+                                <li>airdate: {{ play.airdate }}</li>
+                                <li>artist name: {{ play.artistName }}</li>
+                                <li>release name: {{ play.releaseName }}</li>
+                                <li>release image: {{ play.releaseImage }}</li>
+                                <li>release year: {{ play.releaseYear }}</li>
+                                <li>track name: {{ play.trackName }}</li>
+                                <li>comment: {{ play.comment }}</li>
+                            </UL>
+                        
+                        <form action="{% url 'delete' play.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete play">
+                        </form>
+                
+                        <h3>Comment:</h3>
+                        <form action="{% url 'comment' play.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" value="{{ play.comment }}" name="commentInput">
+                            <input type="submit" value="Submit comment">
+                        </form>
+                    </div>
+                </div>
+                    {% endfor %}
+                
+                {% else %}
+                    <h3> no plays to show :( </h3>
+                {% endif %}
+ </main>
+-->
+</body>
+
+</html>

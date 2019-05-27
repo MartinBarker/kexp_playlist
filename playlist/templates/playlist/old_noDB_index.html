@@ -1,0 +1,26 @@
+<h3>Number of plays in the last hour: {{ numPlays }}</h3>
+
+{% if playData %}
+
+
+{% for play in playData.results %}
+    <h1>Song Details:</h1>
+        {{  play }}<br>
+    <h3>Comment:</h1>
+
+    <form action="{% url 'comment' play.playid %}" method="post">
+    
+        {% csrf_token %}
+            <input type="text" name="commentInput">
+            <!-- check if comment already exists, in which case edit comment instead of submitting-->
+            <input type="submit" value="Submit comment">
+    </form>
+{% endfor %}
+
+<!---
+    {{ playData }}
+-->
+
+{% else %}
+    <h3> playData is empty :( </h3>
+{% endif %}
