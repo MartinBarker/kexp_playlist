@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'playlist.apps.PlaylistConfig',
-    'music.apps.MusicConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,11 +74,20 @@ WSGI_APPLICATION = 'website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+
 DATABASES = {
-   # 'test': {
-   #     'ENGINE': 'django.db.backends.sqlite3',
-   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-   #     },
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'music',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+'''
+#online posrgresql db
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kxvmghva',
@@ -87,14 +95,8 @@ DATABASES = {
         'PASSWORD': '1nYVvMnl1TGkzTlfochYT2qpzQWO7SNa',
         'HOST': 'raja.db.elephantsql.com', # USING ELEPHANsql, would be localhost if running locally
         'PORT': '5432',
-
     }
-
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-}
+'''
 
 
 # Password validation
