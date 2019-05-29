@@ -8,6 +8,8 @@ Python 3.6
 
 Django 1.11
 
+![alt text](https://i.imgur.com/gjUuQgG.jpg)
+
 # To run this website locally, pull the repo and inside the kexp_playlist folder run:
 
     $ python manage.py runserver
