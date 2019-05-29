@@ -1,7 +1,11 @@
 # kexp_playlist
 
 Martin Barker's KEXP API Django Postgresql assignment
+
+
 Python 3.6 
+
+
 Django 1.11
 
 # To run this website locally, pull the repo and inside the kexp_playlist folder run:
