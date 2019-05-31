@@ -1,0 +1,5 @@
+Django==1.11
+psycopg2-binary==2.8.2
+requests==2.18.4
+requests-toolbelt==0.8.0
+jsonschema==3.0.1
