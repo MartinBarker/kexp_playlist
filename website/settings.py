@@ -76,6 +76,9 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 
 DATABASES = {
+    #local posrgresql db
+    #need to create database 'music'
+    #follow instructions here: https://github.com/MartinBarker/kexp_playlist
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'music',
@@ -84,19 +87,17 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
+    #online posrgresql db
+    #'default': { 
+    #'ENGINE': 'django.db.backends.postgresql',
+    #'NAME': 'kxvmghva',
+    #'USER': 'kxvmghva',
+    #'PASSWORD': '1nYVvMnl1TGkzTlfochYT2qpzQWO7SNa',
+    #'HOST': 'raja.db.elephantsql.com', # USING ELEPHANsql, would be localhost if running locally
+    #'PORT': '5432',
+    #}
 }
-'''
-#online posrgresql db
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kxvmghva',
-        'USER': 'kxvmghva',
-        'PASSWORD': '1nYVvMnl1TGkzTlfochYT2qpzQWO7SNa',
-        'HOST': 'raja.db.elephantsql.com', # USING ELEPHANsql, would be localhost if running locally
-        'PORT': '5432',
-    }
-'''
+
 
 
 # Password validation
