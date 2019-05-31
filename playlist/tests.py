@@ -111,10 +111,13 @@ class PlaylistTestCase(TestCase):
     #verify kexp json data formatting
     def test_kexp_api_formatting(self):
 
-        #get begin_time, end_time, and json_playData from last 5 hours
-        begin_time, end_time, json_playData = getPlayData(5)
+        #verify json data for last i hours
+        for i in range(1, 100):
 
-        validateSchema(json_playData)
+            #get begin_time, end_time, and json_playData from last i hours
+            begin_time, end_time, json_playData = getPlayData(i)
+
+            validateSchema(json_playData)
 
 
 def validateSchema(playData):
