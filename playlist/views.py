@@ -16,7 +16,7 @@ def index(request):
     #playData = json object of last hour of play data from KEXP api
     #begin_time = dateTime object of current time - 1 hour
     #end_time = dateTime object of current time
-    begin_time, end_time, json_playData = getPlayData(1)
+    begin_time, end_time, json_playData = getPlayData(1) #gave int parameter for better testing (see tests.py)
 
     #update database to only include unique plays made within the timeframe, 
     updateDatabase(begin_time, end_time, json_playData)

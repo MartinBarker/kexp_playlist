@@ -6,6 +6,9 @@
 
 <head>
     <title>Playlist</title>
+
+    <link rel="icon" type="image/ico" href="https://www.kexp.org/static/assets/img/favicon.ico" />
+
     <!-- bootstrap -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -33,7 +36,7 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="/">KEXP Playlist</a>
+                <a class="navbar-brand mr-4" href="{% url 'playlist-index' %}">KEXP Playlist</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
