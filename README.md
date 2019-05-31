@@ -3,6 +3,8 @@
 Martin Barker's KEXP API Django Postgresql assignment
 Python 3.6 / Django 1.11
 
+[View online here](https://kexpplaylist.herokuapp.com/playlist/)
+
 [Link to assignment notes](https://docs.google.com/document/d/1U8i8A3GFNNkbVOUFxVq2UWR28rAV4F0ekLSRpYAbQtY/edit?usp=sharing)
 
 Install requirerments for this project with:
