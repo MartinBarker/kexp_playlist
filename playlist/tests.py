@@ -11,13 +11,14 @@ from django.test.client import RequestFactory
 from jsonschema import validate
 import json
 
+
+
 class PlaylistTestCase(TestCase):
     def setUp(self):
         #create instance with hard-coded values
         plays.objects.create(playID="12345", playtypeID="1", playtypeName="Media Play", artistName="Kraftwerk", releaseName="Computer World", releaseImage="https://www.images.com/2134.png", trackName="Pocket Calculator", comment="my comment", releaseYear="1976", airdate="2019-05-30 08:22:00-07")
         plays.objects.create(playID="12346", playtypeID="1", playtypeName="Media Play", artistName="Kraftwerk", releaseName="Computer World", releaseImage="https://www.images.com/2134.png", trackName="Pocket Calculator", comment="", releaseYear="1976", airdate="2019-05-30 08:22:00-07")
 
-    '''
     def test_plays_database_model(self):
         #get instance from our database
         instance = plays.objects.get(playID="12345")
@@ -106,15 +107,19 @@ class PlaylistTestCase(TestCase):
         
         #assert that comment has been edited
         self.assertEqual(instance.comment, "edited comment")
-    '''
+    
     #verify kexp json data formatting
     def test_kexp_api_formatting(self):
 
         #get begin_time, end_time, and json_playData from last 5 hours
         begin_time, end_time, json_playData = getPlayData(5)
 
-        #schema to verify against, written by Martin
-        kexp_schema = {
+        validateSchema(json_playData)
+
+
+def validateSchema(playData):
+    #schema to verify against, written by Martin
+    kexp_schema = {
             "type" : "object",
             "properties" : {
 
@@ -256,12 +261,15 @@ class PlaylistTestCase(TestCase):
             "required": [ "next", "previous", "results" ]
         }
 
-        try:
-            validate(json_playData, kexp_schema)
-        except jsonschema.ValidationError as e:
-            print(e.message)
-        except jsonschema.SchemaError as e:
-            print(e)
+    try:
+        validate(playData, kexp_schema)
+    except jsonschema.ValidationError as e:
+        print(e.message)
+    except jsonschema.SchemaError as e:
+        print(e)
+
+
+
 
 
 #test with hardcoded jsondata which includes music / airbreak plays

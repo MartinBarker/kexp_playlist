@@ -43,7 +43,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'playlist-index' %}">Home</a>
+                        <a class="nav-item nav-link" href="mailto:martinbarker99@gmail.com">martinbarker99@gmail.com</a>
                         <!-- in urls.py file, playlist-index is name of home url pattern -->
                     </div>
                     <!-- Navbar Right Side -->
@@ -97,7 +97,7 @@
                             <td class="pt-3-half" >
                                 <form action="{% url 'comment' play.pk %}" method="post">
                                     {% csrf_token %}
-                                    <input type="text" value="{{ play.comment }}" name="commentInput">
+                                    <input type="text" value="{{ play.comment }}" name="commentInput" maxlength="250">
                                     <input type="submit" value="Submit">
                                 </form>
                             </td>
