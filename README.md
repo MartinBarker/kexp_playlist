@@ -11,23 +11,28 @@ Install requirerments for this project with:
 
     pip install -r requirements.txt
 
-![alt text](https://i.imgur.com/gjUuQgG.jpg)
-
-# To run this website locally, pull the repo and inside the kexp_playlist folder run:
+Run server locally with:
 
     $ python manage.py runserver
 
-# When changes are made to playlist models.py, run migration with:
+To run playlist/tests.py unit tests:
+
+    python manage.py test playlist
+
+![alt text](https://i.imgur.com/gjUuQgG.jpg)
+    
+
+When changes are made to playlist models.py, run migration with:
 
     python manage.py makemigrations playlist
     python manage.py migrate
 
-# When changes are made to settings.py database structure, migrate with:
+When changes are made to settings.py database structure, migrate with:
 
     python manage.py makemigrations
     python manage.py migrate
 
-# In website/settings.py, there are two options for DATABASES:
+In website/settings.py, there are two options for DATABASES:
 
 1. (default) Local postgresql database, need to setup by creating database named 'music'
     * This can be done with pgAdmin, or on the command line with:
@@ -38,6 +43,4 @@ Install requirerments for this project with:
     * Free hosting plan, so slower connection time, but doesn't require downloading postgresql locally.
     * Doesn't work for testing, since the free plan doesn't allow you to create new databases.
 
-# To run playlist/tests.py :
 
-    python manage.py test playlist
