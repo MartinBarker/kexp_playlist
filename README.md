@@ -5,6 +5,8 @@ Python 3.6 / Django 1.11
 
 [View online here](https://kexpplaylist.herokuapp.com/playlist/)
 
+![alt text](https://i.imgur.com/gjUuQgG.jpg)
+
 [Link to assignment notes](https://docs.google.com/document/d/1U8i8A3GFNNkbVOUFxVq2UWR28rAV4F0ekLSRpYAbQtY/edit?usp=sharing)
 
 Install requirerments for this project with:
@@ -13,13 +15,13 @@ Install requirerments for this project with:
 
 Run server locally with:
 
-    $ python manage.py runserver
+    python manage.py runserver
 
 To run playlist/tests.py unit tests:
 
     python manage.py test playlist
 
-![alt text](https://i.imgur.com/gjUuQgG.jpg)
+
     
 
 When changes are made to playlist models.py, run migration with:
