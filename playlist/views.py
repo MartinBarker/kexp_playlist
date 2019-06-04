@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
-#from django.http import HttpResponse, Http404
-#from django.template import loader
 from datetime import datetime, timedelta #for calculating / converting datetime
 from django.utils import timezone
-
 import json #for converting / parsing json
 import requests #for making get request to kexp api url
-#import urllib.request
 
 from .models import plays #import plays database object from playlist/models.py
 
@@ -21,9 +17,6 @@ def index(request):
 
     #update database to only include unique plays made within the timeframe, 
     updateDatabase(begin_time, end_time, json_playData)
-
-    #sort database by airdate
-    plays.objects.extra(order_by=['airdate']) 
 
     #get plays table data from database ordered by dateTime airdate
     db_playsData = plays.objects.all().order_by('-airdate')

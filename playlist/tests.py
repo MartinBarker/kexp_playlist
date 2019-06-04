@@ -206,7 +206,14 @@ def validateSchema(playData):
                                         "type": "object",
                                         "properties":{
                                             "releaseeventid": { "type": "number" },
-                                            "year": { "type": "number" },   
+                                            "year": {
+                                                "anyOf": [
+                                                    { "type": "number" }, 
+                                                    { "type": "null" },   
+                                                ] 
+                                            }
+                                            
+                                             
                                         },
                                         "required":[ "releaseeventid", "year"],
                                         "additionalProperties": False
