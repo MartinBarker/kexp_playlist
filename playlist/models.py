@@ -12,16 +12,6 @@ class plays(models.Model):
     releaseImage = models.CharField(max_length=250, null=True)
     trackName = models.CharField(max_length=250, null=True)
     comment = models.CharField(max_length=250, null=True)
-    
-    '''
-    migration examples
-    '''
     releaseYear = models.CharField(max_length=250, null=True)
-    #releaseYear = models.DateField(null=True, blank=False, auto_now_add=False, auto_now=False)
     airdate = models.DateTimeField(null=False, blank=False, auto_now_add=False, auto_now=False)
-    #airdate =  models.CharField(max_length=250, null=True)
-
-    #built in syntax : string representation of this object (specify what its supposed to print out)
-    #def __str__(self):
-    #    return str(self.pk) + ' - ' + self.trackName
 

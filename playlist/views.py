@@ -13,10 +13,11 @@ from .models import plays #import plays database object from playlist/models.py
 #when called, update database and return last hour of songs played
 def index(request):
 
-    #playData = json object of last hour of play data from KEXP api
     #begin_time = dateTime object of current time - 1 hour
     #end_time = dateTime object of current time
+    #playData = json object of last hour of play data from KEXP api
     begin_time, end_time, json_playData = getPlayData(1) #gave int parameter for better testing (see tests.py)
+    #example: begin_time = 7pm, end_time = 8pm
 
     #update database to only include unique plays made within the timeframe, 
     updateDatabase(begin_time, end_time, json_playData)
@@ -94,62 +95,39 @@ def delete(request, playid):
     #redirect to /playlist/page
     return redirect('/playlist/')
 
-#update database to only include songs from last 60 minutes of playData
+#update database to only include songs from playData during the timeframe
 def updateDatabase(begin_time, end_time, playData):
-    #begin_time = dateTime object one hour ago
-    #end_time = dateTime object  current time
-    #playData = json data of last 60 mins pulled from API
+    #begin_time = dateTime object of current time - 1 hour
+    #end_time = dateTime object of current time
+    #playData = json data pulled from kexp API
 
-    #to print times for debugging purposes, convert to string
-    #print("begin_time = ", str(begin_time))
+    # 1. Clean up the database by removing any songs not within the timeframe from the database
 
-    #remove any songs not within the timeframe from the database
-
-    '''
-    new way
-    '''
-    #get rows with airdate before begin_time
+    #delete rows from database where airdate comes before begin_time
     results = plays.objects.filter(airdate__lt=begin_time)
-    print("len(results) = ", len(results))
     results.delete()
 
-    '''
-    old way (bad because have to iterate through database; slow)
-    '''
-    #get all rows in plays database
-#    items = plays.objects.all()
-    #iterate through every value in database
-#    for item in items.values('id', 'airdate', 'comment'):
-        #print("is item['airdate'] = ", item['airdate'], " < ", begin_time)
-        #if targetPlay.airdate is before (<) begin_time:
-#        if item['airdate'] < begin_time:
-            #get play from database
-#            play = plays.objects.get(id = item['id'])
-            #delete play from database
-#            play.delete()
+    # 2. Insert new plays from the playData into the database
+    #need to ensure only unique plays are inserted into database because whenever the user refreshes /playlist/ it updates the view to display the last 60 minutes of plays, so if the user refreshes the page multiple times in the span of one hour there will be overlap of songs received from the kexp api url request.
 
-
-    #only insert unique new plays to database 
-    #needed because whenever the user refreshes /playlist/ it updates the view to display the last 60 minutes of plays, so if the user refreshes the page multiple times in the span of one hour there will be overlap of songs received from the kexp api url request. so this ensures that the database (and therefore the page) only contains plays within the timeframe
-
-    #iterate through every play from kexp api request
+    #iterate through every play from playData json 
     for song in playData['results']:
-        #print("checking if play_to_insert is unique")
         #get playid of play we want to insert
         playid_to_insert = song['playid']
         #get number of instances from database with same playid
         instances = plays.objects.filter(playID = playid_to_insert)
         #if there are no instances of a database row with this playid:
         if(len(instances) == 0):
-            #turn json play into plays model object
+            #convert json play into object we can add to database
             play_to_insert = getPlayFromJSON(song)
             #save play_to_insert to database
             play_to_insert.save()
 
 #convert json 'song' to database 'play' object
 def getPlayFromJSON(song):
-    #create new play to insert
+    #create new blank play to insert
     play_to_insert = plays()
+    
     #set fields:
 
     #these fields will always be present: (no matter if its an airbreak, song, etc)
@@ -158,14 +136,17 @@ def getPlayFromJSON(song):
     play_to_insert.playtypeName = song['playtype']['name']
 
     #get airdate string from json song and format it into a dateTime object
-    kexp_airdate_string = song['airdate']
+    kexp_airdate_string = song['airdate']                # 2019-06-04T05:50:00Z
+    
     #remove last character "Z"
-    kexp_airdate_string = kexp_airdate_string[:-1]
+    kexp_airdate_string = kexp_airdate_string[:-1]       # 2019-06-04T05:50:00
+
     #convert string to dateTime object
-    dt, _, us = kexp_airdate_string.partition(".")
-    dt = datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S")
-    #convert to pacific
+    dt = datetime.strptime(kexp_airdate_string, "%Y-%m-%dT%H:%M:%S")
+
+    #convert to pacific time (for easier displaying)
     pacific_conversion = dt - timedelta(hours=7)
+
     #store new pacific dateTime object
     play_to_insert.airdate = pacific_conversion
 
