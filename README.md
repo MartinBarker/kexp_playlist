@@ -45,4 +45,8 @@ In website/settings.py, there are two options for DATABASES:
     * Free hosting plan, so slower connection time, but doesn't require downloading postgresql locally.
     * Doesn't work for testing, since the free plan doesn't allow you to create new databases.
 
+# Resources used:
+- [Converting string into datetime](https://stackoverflow.com/questions/466345/converting-string-into-datetime)
+- [How to add hours to current time in python](https://stackoverflow.com/questions/13685201/how-to-add-hours-to-current-time-in-python)
+- [Django Windows PostgreSQL Installation and Setup](https://www.thecrazyprogrammer.com/2019/01/django-postgresql-installation-and-setup.html)
 
